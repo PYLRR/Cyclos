@@ -1,0 +1,109 @@
+/* Otway Rees symmetric key
+  A -> B : M,A,B,{1,Na,M,A,B}Kas
+  B -> S : M,A,B,{1,Na,M,A,B}Kas,{2,Nb,M,A,B}Kbs
+  S -> B : M, {3,Na,Kab}Kas, {4,Nb,Kab}Kbs
+  B -> A : M,{3,Na,Kab}Kas
+  
+Secrecy of kab (as sent by S) encoded as strong secrecy
+P(mP/nb) equiv P(mQ/nb)
+with mP, mQ public constants
+*/
+
+public:
+c1:tag1
+c2:tag2
+c3:tag3
+c4:tag4
+a:agent
+b:agent
+c:agent
+mP:sessionkey
+mQ:sessionkey
+kcs:lgtkeyc
+nac:nonce
+nbc:nonce
+
+private:
+kas:lgtkey
+kbs:lgtkey
+kab:sessionkey
+kba:sessionkey
+kbc:sessionkey
+kac:sessionkey
+kca:sessionkey
+kcb:sessionkey
+m1:sid
+m1b:sid
+m2:sid
+mc:sid
+na1:nonce
+nab1:nonce
+nba1:nonce
+na2:nonce
+nb1:nonce
+nb2:nonce
+
+
+% Role A played by a with b (and s)
+out(0, <m1, <a, <b, senc(<c1, <na1, <m1, <a,b>>>>, kas) >>>) 
+in(0, <m1, senc(<c3, <na1, xkab:sessionkey> >, kas) > )
+
+% Role A played by b with a (and s)
+out(1, <m1b, <b, <a, senc(<c1, <nab1, <m1b, <b,a>>>>, kbs) >>> )
+in(1, <m1b, senc(<c3, <nab1, xkba:sessionkey>>, kbs) > )
+
+% Role S played by s with a and b + property
+in(2, <ym:sid, <a, <b, <senc(<c1, <yna:nonce, <ym, <a,b>>>>, kas), senc(<c2, <ynb:nonce, <ym, <a,b>>>>, kbs) >>>> )
+out(2, <ym, <senc(<c3, <yna, mP>>, kas), senc(<c4, <ynb, mP>>, kbs) >> )
+
+% Role S played by s with b and a
+in(3, <ym:sid, <b, <a, <senc(<c1, <yna:nonce, <ym, <b,a>>>>, kbs), senc(<c2, <ynb:nonce, <ym, <b,a>>>>, kas) >>>> )
+out(3, <ym, <senc(<c3, <yna, kba>>, kbs), senc(<c4, <ynb, kba>>, kas) >> )
+
+% Role B played by b with a (and s)
+in(4, <zm:sid, <a, <b, za1:cfw>>> )
+out(4, <zm, <a, <b, <za1, senc(<c2, <nb1, <zm, <a, b>>>> , kbs) >>>> )
+in(4, <zm, <za2:cfw, senc(<c4, <nb1, zkab:sessionkey>>, kbs) >> )
+out(4, <zm, za2>)
+
+% Role B played by a with b (and s)
+in(5, <zm:sid, <b, <a, za1:cfw>>>  )
+out(5, <zm, <b, <a, <za1, senc(<c2, <nba1, <zm, <b, a>>>> , kas)>>>>)
+in(5, <zm, <za2:cfw, senc(<c4, <nba1, zkba:sessionkey>>, kas) >> )
+out(5, <zm, za2>)
+
+% Role A played by a with c (and s)
+out(6, <m2, <a, <c, senc(<c1, <na2, <m2, <a, c> > >> , kas)>>>)
+in(6, <m2, senc(<c3, <na2, xkab:sessionkey>>, kas) > )
+
+% Role A played by b with c (and s)
+out(7, <mc, <b, <c, senc(<c1, <nac, <mc, <b, c>>>>, kbs) >>> )
+in(7, <mc, senc(<c3, <nac, xkca:sessionkey>>, kbs) > )
+
+% Role S played by s with a and c
+in(8, <ym:sid, <a, <c, <senc(<c1, <yna:nonce, <ym, <a, c> >>>, kas), senc(<c2, <ynb:nonce, <ym, <a,c> > >>, kcs)>>>> )
+out(8, <ym, <senc(<c3, <yna, kac>>, kas), senc(<c4, <ynb, kac>>, kcs) >> )
+
+% Role S played by s with c and a
+in(9, <ym:sid, <c, <a, <senc(<c1, <yna:nonce, <ym, <c, a> > > >, kcs), senc(<c2, <ynb:nonce, <ym, <c,a>>>>, kas) >>>> )
+out(9, <ym, <senc(<c3, <yna, kca>>, kcs), senc(<c4, <ynb, kca>>, kas) >> )
+
+% Role B played by b with c (and s)
+in(10, <zm:sid, <c, <b, za1:cfw>>>)
+out(10,<zm, <c, <b, <za1, senc(<c2, <nb2, <zm, <c, b>>>>, kbs)>>>> )
+in(10, <zm, <za2:cfw, senc(<c4, <nb2, zkab:sessionkey>>, kbs) >> )
+out(10, <zm, za2>)
+
+% Role B played by a with c (and s)
+in(11, <zm:sid, <c, <a, za1:cfw>>>)
+out(11, <zm, <c, <a, <za1, senc(<c2, <nbc, <zm, <c, a>>>>, kas)>>>> )
+in(11, <zm, <za2:cfw, senc(<c4, <nbc, zkbc:sessionkey>> , kas) >> )
+out(11, <zm, za2>)
+
+% Role S played by s with c and b
+in(12, <ym:sid, <c, <b, <senc(<c1, <yna:nonce, <ym, <c,b>>>>, kcs) ,senc(<c2, <ynb:nonce, <ym, <c, b>>>>, kbs) >>>> )
+out(12, <ym, <senc(<c3, <yna, kbc>>, kcs), senc(<c4,<ynb, kbc>>, kbs)>> )
+
+% Role S played by s with b and c
+in(13, <ym:sid, <b, <c, <senc(<c1, <yna:nonce, <ym, <b, c> > >>, kbs), senc(<c2, <ynb:nonce, <ym, <b, c> > > >, kcs) >>>> )
+out(13, <ym, <senc(<c3, <yna, kcb>>, kbs), senc(<c4,<ynb, kcb>>, kcs) >> )

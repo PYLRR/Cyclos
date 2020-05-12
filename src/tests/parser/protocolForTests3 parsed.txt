@@ -1,0 +1,30 @@
+public:
+a:typea (public,dishonest)
+b:typeb (public,dishonest)
+c:typec (public,dishonest)
+skc:kaencc (public,dishonest)
+
+
+private:
+n1:noncem (not public,dishonest)
+n2:noncem (not public,dishonest)
+ska:kaenca (not public,honest)
+skb:kaencb (not public,honest)
+k0:noncek (not public,dishonest)
+k1:noncek (not public,dishonest)
+
+
+α0out:out(0,<pub(ska),pub(skb)>)
+
+β0out:out(1,aenc(sign(<a,b,k0>,ska),pub(skb)))
+β1in:in(1,senc(xa0:noncem (not public,dishonest),k0))
+
+γ0in:in(2,aenc(sign(<a,b,xb:noncek (not public,dishonest)>,ska),pub(skb)))
+γ1out:out(2,senc(n1,xb))
+
+δ0out:out(3,aenc(sign(<a,c,k1>,ska),pub(skc)))
+δ1in:in(3,senc(xa1:noncem (not public,dishonest),k1))
+
+ε0in:in(4,aenc(sign(<c,b,xc:noncek (not public,dishonest)>,skc),pub(skb)))
+ε1out:out(4,senc(n2,xc))
+

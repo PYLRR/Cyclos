@@ -1,0 +1,21 @@
+
+
+public:
+a:agenta
+b:agentb
+kcs: pkey
+
+
+private:
+k: skey
+n: nonce
+
+
+in(0, <a, <b, x:nonce>>)
+out(0, <senc(<b, <a, <x, k>>>, kcs), x>)
+
+
+in(1, <a, <b, y:nonce>>)
+out(1, <senc(<b, <a, <y, k>>>, kcs), y>)
+
+out(2,n)

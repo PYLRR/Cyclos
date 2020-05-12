@@ -1,0 +1,73 @@
+/* Needham-Schroeder symmetric key
+  A -> S : A, B, Na
+  S -> A : { B, Na, Kab, {A,Kab}Kbs }Kas
+  A -> B : { A, Kab }Kbs
+  B -> A : { Req, Nb }Kab
+  A -> B : { Rep, Nb }Kab 
+
+Secrecy of key Kab (from the point of view of B) encoded as the encryption of two different public constants, one with the key, and one with a random value k
+B -> : {m1}Kab vs {m2}k with m1, m2 public constants
+
+Semicomplete scenario
+*/
+
+public:
+a:agenta
+b:agentb
+c:agentc
+req:tagq
+rep:tagp
+m1:cst
+m2:cst
+kcs:lgtkeyc
+
+private:
+kas:lgtkeya
+kbs:lgtkeyb
+kab:sessionkey
+kac:sessionkey
+kcb:sessionkey
+k:sessionkey
+na:noncea
+nb:nonceb
+na1:noncea
+nb1:nonceb
+
+
+% Role A played by a with b (and s)
+out(0,pair(pair(a,b),na))
+in(0,senc(pair(pair(pair(b, na), xkab:sessionkey),x0:senc(pair(agenta, sessionkey), lgtkeyb)),kas))
+out(0,x0)
+in(0,senc(pair(req,xnb:nonceb),xkab))
+out(0,senc(pair(rep,xnb),xkab))
+
+% Role S played by s with a and b
+in(1,pair(pair(a,b),zna:noncea))
+out(1,senc(pair(pair(pair(b,zna),kab),senc(pair(a,kab),kbs)),kas))
+
+% Role B played by b with a (and s) + property
+in(2,senc(pair(a,ykab:sessionkey),kbs))
+out(2,senc(pair(req,nb),ykab))
+in(2,senc(pair(rep,nb),ykab))
+out(2,senc(m1,ykab))
+
+% Role A played by a with c (and s)
+out(3,pair(pair(a,c),na1))
+in(3,senc(pair(pair(pair(c, na1), xkac:sessionkey),x0:senc(pair(agenta, sessionkey), lgtkeyc)),kas))
+out(3,x0)
+in(3,senc(pair(req,xnc:nonceb),xkac))
+out(3,senc(pair(rep,xnc),xkac))
+
+% Role S played by s with a and c
+in(4,pair(pair(a,c),zna:noncea))
+out(4,senc(pair(pair(pair(c,zna),kac),senc(pair(a,kac),kcs)),kas))
+
+% Role S played by s with c and b
+in(5,pair(pair(c,b),znc:noncec))
+out(5,senc(pair(pair(pair(b,znc),kcb),senc(pair(c,kcb),kbs)),kcs))
+
+% Role B played by b with c (and s)
+in(6,senc(pair(c,ykcb:sessionkey),kbs))
+out(6,senc(pair(req,nb1),ykcb))
+in(6,senc(pair(rep,nb1),ykcb))
+

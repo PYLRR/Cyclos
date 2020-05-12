@@ -1,0 +1,59 @@
+/*
+Yahalom-Paulson
+
+A,  B,  S :  principal
+Na,  Nb : fresh numbers
+Kas,  Kbs,  Kab :   key
+
+1.   A -> B : A,  Na
+2.   B -> S : B,  Nb,  {1,  A,  Na }Kbs
+3.   S -> A : Nb,  {2,  B,  Kab,  Na}Kas,  {3,  A,  B,  Kab,  Nb}Kbs
+4.   A -> B : {3,  A,  B,  Kab,  Nb}Kbs,  {4, Nb}Kab 
+
+Secrecy of key Kab (from the point of view of B) encoded as the encryption of two different public constants, one with the key, and one with a random value k
+B -> : {5, m1}Kab vs {5, m2}k with m1, m2 public constants
+
+Semicomplete scenario
+*/
+
+public:
+a:agenta
+b:agentb
+c:agentc
+s:ser
+m1:atm
+m2:atm
+one:tag1
+two:tag2
+three:tag3
+four:tag4
+five:tag5
+kcs:lkeyc
+
+private:
+na1:noncea
+na2:noncea
+nb1:nonceb
+nb2:nonceb
+kas:lkeya
+kbs:lkeyb
+kab1:skey
+kab2:skey
+kab3:skey
+k:skey
+
+%Role of A played by a with b
+out(0, <a, na1>)
+in(0, <<xb:nonceb, senc(<two, <b, <xkab:skey, na1>>>, kas)>, cfw:cfw1>)
+out(0, <cfw, senc(<four, xb>, xkab)>)
+
+%Role of B played by b with a  property
+in(1, <a, ya:noncea>)
+out(1, <b, <nb1, senc(<one, <a, ya>>, kbs)>>)
+in(1, <senc(<three, <a, <b, <ykab:skey, nb1>>>>, kbs), senc(<four, nb1>, ykab)>)
+out(1, senc(<five, m1>, ykab))
+
+%Role of S with a and b 
+in(2, <b, <zb:nonceb, senc(<one, <a, za:noncea>>, kbs)>>)
+out(2, <zb, <senc(<two, <b, <kab1, za>>>, kas), senc(<three, <a, <b,<kab1, zb>>>>, kbs)>>)
+

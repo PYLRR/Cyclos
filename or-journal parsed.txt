@@ -1,0 +1,86 @@
+public:
+c1:tag1 (public,dishonest)
+c2:tag2 (public,dishonest)
+c3:tag3 (public,dishonest)
+c4:tag4 (public,dishonest)
+a:agent (public,dishonest)
+b:agent (public,dishonest)
+c:agent (public,dishonest)
+mP:sessionkey (not public,dishonest)
+mQ:sessionkey (not public,dishonest)
+kcs:lgtkeyc (public,dishonest)
+nac:nonce (not public,dishonest)
+nbc:nonce (not public,dishonest)
+
+
+private:
+kas:lgtkey (not public,honest)
+kbs:lgtkey (not public,honest)
+kab:sessionkey (not public,honest)
+kba:sessionkey (not public,dishonest)
+kbc:sessionkey (not public,dishonest)
+kac:sessionkey (not public,dishonest)
+kca:sessionkey (not public,dishonest)
+kcb:sessionkey (not public,dishonest)
+m1:sid (not public,dishonest)
+m1b:sid (not public,dishonest)
+m2:sid (not public,dishonest)
+mc:sid (not public,dishonest)
+na1:nonce (not public,dishonest)
+nab1:nonce (not public,dishonest)
+nba1:nonce (not public,dishonest)
+na2:nonce (not public,dishonest)
+nb1:nonce (not public,dishonest)
+nb2:nonce (not public,dishonest)
+
+
+α0out:out(0,<m1,<a,<b,senc(<c1,<na1,<m1,<a,b>>>>,kas)>>>)
+α1in:in(0,<m1,senc(<c3,<na1,xkab:sessionkey (not public,dishonest)>>,kas)>)
+
+β0out:out(1,<m1b,<b,<a,senc(<c1,<nab1,<m1b,<b,a>>>>,kbs)>>>)
+β1in:in(1,<m1b,senc(<c3,<nab1,xkba:sessionkey (not public,dishonest)>>,kbs)>)
+
+γ0in:in(2,<ym:sid (not public,dishonest),<a,<b,<senc(<c1,<yna:nonce (not public,dishonest),<ym,<a,b>>>>,kas),senc(<c2,<ynb:nonce (not public,dishonest),<ym,<a,b>>>>,kbs)>>>>)
+γ1out:out(2,<ym,<senc(<c3,<yna,mP>>,kas),senc(<c4,<ynb,mP>>,kbs)>>)
+
+δ0in:in(3,<ym:sid (not public,dishonest),<b,<a,<senc(<c1,<yna:nonce (not public,dishonest),<ym,<b,a>>>>,kbs),senc(<c2,<ynb:nonce (not public,dishonest),<ym,<b,a>>>>,kas)>>>>)
+δ1out:out(3,<ym,<senc(<c3,<yna,kba>>,kbs),senc(<c4,<ynb,kba>>,kas)>>)
+
+ε0in:in(4,<zm:sid (not public,dishonest),<a,<b,za1:cfw (public,dishonest)>>>)
+ε1out:out(4,<zm,<a,<b,<za1,senc(<c2,<nb1,<zm,<a,b>>>>,kbs)>>>>)
+ε2in:in(4,<zm,<za2:cfw (public,dishonest),senc(<c4,<nb1,zkab:sessionkey (not public,dishonest)>>,kbs)>>)
+ε3out:out(4,<zm,za2>)
+
+ζ0in:in(5,<zm:sid (not public,dishonest),<b,<a,za1:cfw (public,dishonest)>>>)
+ζ1out:out(5,<zm,<b,<a,<za1,senc(<c2,<nba1,<zm,<b,a>>>>,kas)>>>>)
+ζ2in:in(5,<zm,<za2:cfw (public,dishonest),senc(<c4,<nba1,zkba:sessionkey (not public,dishonest)>>,kas)>>)
+ζ3out:out(5,<zm,za2>)
+
+η0out:out(6,<m2,<a,<c,senc(<c1,<na2,<m2,<a,c>>>>,kas)>>>)
+η1in:in(6,<m2,senc(<c3,<na2,xkab:sessionkey (not public,dishonest)>>,kas)>)
+
+θ0out:out(7,<mc,<b,<c,senc(<c1,<nac,<mc,<b,c>>>>,kbs)>>>)
+θ1in:in(7,<mc,senc(<c3,<nac,xkca:sessionkey (not public,dishonest)>>,kbs)>)
+
+ι0in:in(8,<ym:sid (not public,dishonest),<a,<c,<senc(<c1,<yna:nonce (not public,dishonest),<ym,<a,c>>>>,kas),senc(<c2,<ynb:nonce (not public,dishonest),<ym,<a,c>>>>,kcs)>>>>)
+ι1out:out(8,<ym,<senc(<c3,<yna,kac>>,kas),senc(<c4,<ynb,kac>>,kcs)>>)
+
+κ0in:in(9,<ym:sid (not public,dishonest),<c,<a,<senc(<c1,<yna:nonce (not public,dishonest),<ym,<c,a>>>>,kcs),senc(<c2,<ynb:nonce (not public,dishonest),<ym,<c,a>>>>,kas)>>>>)
+κ1out:out(9,<ym,<senc(<c3,<yna,kca>>,kcs),senc(<c4,<ynb,kca>>,kas)>>)
+
+λ0in:in(10,<zm:sid (not public,dishonest),<c,<b,za1:cfw (public,dishonest)>>>)
+λ1out:out(10,<zm,<c,<b,<za1,senc(<c2,<nb2,<zm,<c,b>>>>,kbs)>>>>)
+λ2in:in(10,<zm,<za2:cfw (public,dishonest),senc(<c4,<nb2,zkab:sessionkey (not public,dishonest)>>,kbs)>>)
+λ3out:out(10,<zm,za2>)
+
+μ0in:in(11,<zm:sid (not public,dishonest),<c,<a,za1:cfw (public,dishonest)>>>)
+μ1out:out(11,<zm,<c,<a,<za1,senc(<c2,<nbc,<zm,<c,a>>>>,kas)>>>>)
+μ2in:in(11,<zm,<za2:cfw (public,dishonest),senc(<c4,<nbc,zkbc:sessionkey (not public,dishonest)>>,kas)>>)
+μ3out:out(11,<zm,za2>)
+
+ν0in:in(12,<ym:sid (not public,dishonest),<c,<b,<senc(<c1,<yna:nonce (not public,dishonest),<ym,<c,b>>>>,kcs),senc(<c2,<ynb:nonce (not public,dishonest),<ym,<c,b>>>>,kbs)>>>>)
+ν1out:out(12,<ym,<senc(<c3,<yna,kbc>>,kcs),senc(<c4,<ynb,kbc>>,kbs)>>)
+
+ξ0in:in(13,<ym:sid (not public,dishonest),<b,<c,<senc(<c1,<yna:nonce (not public,dishonest),<ym,<b,c>>>>,kbs),senc(<c2,<ynb:nonce (not public,dishonest),<ym,<b,c>>>>,kcs)>>>>)
+ξ1out:out(13,<ym,<senc(<c3,<yna,kcb>>,kbs),senc(<c4,<ynb,kcb>>,kcs)>>)
+

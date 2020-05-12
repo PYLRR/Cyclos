@@ -1,0 +1,38 @@
+/*Denning-Sacco with signature
+
+A -> B : aenc(sign(k, sk(A)), pk(B))
+B -> A : senc(m,k)
+
+Strong secrecy of m (from the point of view of B) 
+B -> : {m1}k vs {m2}k with m1, m2 public constants
+
+Scenario minimal
+*/
+
+public:
+ekc:ekc
+skc:skc
+m1:m
+m2:m
+
+private:
+eka:ek
+ska:sk
+ekb:ek
+skb:sk
+k1:k
+
+%Reveal verification key 
+out(0,pub(ekb))
+out(0,vk(skb))
+out(0,pub(eka))
+out(0,vk(ska))
+
+%Role A played by a with c
+out(1,aenc(sign(k1,ska),pub(ekc)))
+in(1,senc(xa1:m,k1))
+
+
+% Role B played by b with a + property
+in(2,aenc(sign(xb:k,ska),pub(ekb)))
+out(2,senc(m1,xb))

@@ -1,0 +1,37 @@
+// example of comment
+/* example of comment
+on several
+lines */
+
+public:
+a : typea
+b:typeb
+c:typec
+skc:kaencc
+
+private:
+n1:noncem
+n2:noncem
+ska:kaenca
+skb:kaencb
+k0:noncek
+k1:noncek
+
+%emission cles pub
+out( 0 , < pub ( ska ) , pub (  skb ) > )
+
+%role a avec b par a
+out(1 ,aenc(sign( < a, b,k0>, ska),pub(skb)))
+in(1, senc(xa0: noncem,k0) )
+
+%role a avec b par b
+in(2,aenc(sign(<a,b,xb :noncek>,ska),pub(skb)))
+out(2,senc (n1 ,xb))
+
+%role a avec c par a
+out(3,aenc(sign(<a,c,k1>,ska),pub(skc)))
+in(3,senc(xa1:noncem,k1))
+
+%role a avec c par c
+in(4,aenc(sign(<c,b,xc:noncek>,skc),pub(skb)))
+out(4,senc(n2,xc))

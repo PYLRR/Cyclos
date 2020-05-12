@@ -1,0 +1,12 @@
+
+public:
+a:agenta
+k1:key
+
+private:
+k2:key
+n:nonce
+
+%Role of A played by a with b
+in(0, <x:nonce,y:key,n>)
+out(0, senc(x,y))

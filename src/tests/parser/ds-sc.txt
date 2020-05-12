@@ -1,0 +1,57 @@
+/*
+Denning Sacco symmetric key
+  A -> S : A, B
+  S -> A : {B, Kab, {Kab,A}Kbs }Kas
+  A -> B : {Kab, A }Kbs
+
+Secrecy of key Kab (from the point of view of B) encoded as the encryption of two different public constants, one with the key, and one with a random value k
+B -> : {m1}Kab vs {m2}k with m1, m2 public constants
+
+
+Semicomplete scenario
+*/
+
+public:
+m1:cst
+m2:cst
+a:agent
+b:agent
+c:agent
+kcs:lgtkeyc
+
+private:
+kas:lgtkeya
+kbs:lgtkeyb
+kab1:sessionkey1
+kab2:sessionkey2
+kab3:sessionkey3
+k:sessionkey
+
+% Role A played by a with b (and s)
+out(0,<a,b>)
+in(0,senc(pair(pair(b, xkab:sessionkey1),x0:senc(pair(sessionkey1,agent),lgtkeyb)),kas))
+out(0,x0)
+
+% Role A played by a with c (and s)
+out(3,pair(a,c))
+in(3,senc(pair(pair(c, xkab:sessionkey2),x0:senc(pair(sessionkey2,agent),lgtkeyc)),kas))
+out(3,x0)
+
+% Role S played by s with a and b
+in(1,pair(a,b))
+out(1,senc(pair(pair(b,kab1),senc(pair(kab1,a),kbs)),kas))
+
+% Role S played by s with a and c
+in(4,pair(a,c))
+out(4,senc(pair(pair(c,kab2),senc(pair(kab2,a),kcs)),kas))
+
+% Role S played by s with c and b
+in(5,pair(c,b))
+out(5,senc(pair(pair(b,kab3),senc(pair(kab3,c),kbs)),kcs))
+
+% Role B played by b with a (and s) + property
+in(2,senc(pair(ykab:sessionkey1,a),kbs))
+out(2,senc(m1,ykab))
+
+% Role B played by b with c (and s) 
+in(6,senc(pair(ykab:sessionkey3,c),kbs))

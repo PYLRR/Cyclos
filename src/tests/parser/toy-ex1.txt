@@ -1,0 +1,13 @@
+public:
+m1:tau1
+m2:tau2
+
+private:
+k:tauk
+
+in(0,x1:tau1)
+out(0,senc(x1,k))
+
+out(1,x2:tau2)
+in(1,senc(x2,k))
+

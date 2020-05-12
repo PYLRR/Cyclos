@@ -1,0 +1,25 @@
+// example of comment
+/* example of comment
+on several lines
+*/
+
+public:
+a:typea
+b:typeb
+c:typec
+
+private:
+d:typed
+
+%trans0
+out(1,<pub(a),pub(b)>)
+
+%trans1
+in(1,aenc(senc(e:typea,b),c))
+out(1,pub(d))
+
+%trans2
+in(1,senc(aenc(a,b),a))
+out(1,sign(b,c))
+
+

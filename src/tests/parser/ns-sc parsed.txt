@@ -1,0 +1,54 @@
+public:
+a:agenta (public,dishonest)
+b:agentb (public,dishonest)
+c:agentc (public,dishonest)
+req:tagq (public,dishonest)
+rep:tagp (public,dishonest)
+m1:cst (public,dishonest)
+m2:cst (public,dishonest)
+kcs:lgtkeyc (public,dishonest)
+
+
+private:
+kas:lgtkeya (not public,honest)
+kbs:lgtkeyb (not public,honest)
+kab:sessionkey (not public,dishonest)
+kac:sessionkey (not public,dishonest)
+kcb:sessionkey (not public,dishonest)
+k:sessionkey (not public,honest)
+na:noncea (not public,dishonest)
+nb:nonceb (not public,dishonest)
+na1:noncea (not public,dishonest)
+nb1:nonceb (not public,dishonest)
+
+
+α0out:out(0,<<a,b>,na>)
+α1in:in(0,senc(<<<b,na>,xkab:sessionkey (not public,dishonest)>,x0:senc(<agenta (public,dishonest),sessionkey (not public,dishonest)>,lgtkeyb (not public,honest))>,kas))
+α2out:out(0,x0)
+α3in:in(0,senc(<req,xnb:nonceb (not public,dishonest)>,xkab))
+α4out:out(0,senc(<rep,xnb>,xkab))
+
+β0in:in(1,<<a,b>,zna:noncea (not public,dishonest)>)
+β1out:out(1,senc(<<<b,zna>,kab>,senc(<a,kab>,kbs)>,kas))
+
+γ0in:in(2,senc(<a,ykab:sessionkey (not public,dishonest)>,kbs))
+γ1out:out(2,senc(<req,nb>,ykab))
+γ2in:in(2,senc(<rep,nb>,ykab))
+γ3out:out(2,senc(m1,ykab))
+
+δ0out:out(3,<<a,c>,na1>)
+δ1in:in(3,senc(<<<c,na1>,xkac:sessionkey (not public,dishonest)>,x0:senc(<agenta (public,dishonest),sessionkey (not public,dishonest)>,lgtkeyc (public,dishonest))>,kas))
+δ2out:out(3,x0)
+δ3in:in(3,senc(<req,xnc:nonceb (not public,dishonest)>,xkac))
+δ4out:out(3,senc(<rep,xnc>,xkac))
+
+ε0in:in(4,<<a,c>,zna:noncea (not public,dishonest)>)
+ε1out:out(4,senc(<<<c,zna>,kac>,senc(<a,kac>,kcs)>,kas))
+
+ζ0in:in(5,<<c,b>,znc:noncec (public,dishonest)>)
+ζ1out:out(5,senc(<<<b,znc>,kcb>,senc(<c,kcb>,kbs)>,kcs))
+
+η0in:in(6,senc(<c,ykcb:sessionkey (not public,dishonest)>,kbs))
+η1out:out(6,senc(<req,nb1>,ykcb))
+η2in:in(6,senc(<rep,nb1>,ykcb))
+

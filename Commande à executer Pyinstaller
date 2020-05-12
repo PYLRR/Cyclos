@@ -1,0 +1,15 @@
+Sur Windows :
+pip install pypiwin32
+pip install pefile
+pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip
+pyinstaller -y -F -w --name="Cyclos" -i "C:/Users/jsant/OneDrive/Images/Documents/projet-groupe-G/Cyclos/cyclos.ico" --add-data "C:/Users/jsant/OneDrive/Images/Documents/projet-groupe-G/Cyclos/data;." --clean --log-level DEBUG --add-data "D:\ProgramData\Anaconda3\envs\Cyclos37\tcl\tk*;tk/" --add-data "D:\ProgramData\Anaconda3\envs\Cyclos37\tcl\tcl*;tcl/" --hidden-import pkg_resources.py2_warn --exclude-module src.tests "C:/Users/jsant/OneDrive/Images/Documents/projet-groupe-G/Cyclos/__main__.py"
+pyinstaller -y -F -w --name="Cyclos" -i "C:/Users/jsant/OneDrive/Images/Documents/projet-groupe-G/Cyclos/cyclos.ico" --add-data "C:/Users/jsant/OneDrive/Images/Documents/projet-groupe-G/Cyclos/data;." --clean --log-level DEBUG --add-data "D:\ProgramData\Anaconda3\envs\Cyclos37\tcl\tk*;tk/" --add-data "D:\ProgramData\Anaconda3\envs\Cyclos37\tcl\tcl*;tcl/" --hidden-import pkg_resources.py2_warn --hidden-import encodings --exclude-module src.tests "C:/Users/jsant/OneDrive/Images/Documents/projet-groupe-G/Cyclos/__main__.py"
+
+Sur Linux :
+sudo apt install binutils
+pip install pyinstaller
+pyinstaller -y -w -F --name="Cyclos" -i './cyclos.ico' --add-data './data/:.' --clean --log-level DEBUG --exclude-module src.tests __main__.py
+
+Sur Mac :
+pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip
+pyinstaller -y -w -F --name="Cyclos" -i './cyclos.ico' --add-data './data/:.' --clean --log-level DEBUG --exclude-module src.tests __main__.py

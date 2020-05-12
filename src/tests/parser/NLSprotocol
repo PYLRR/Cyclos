@@ -1,0 +1,41 @@
+/* NLS protocol */
+
+public:
+a: agent
+b: agent
+c: agent
+skc:kaencc
+one: tag1
+
+private:
+na0:noncea0
+nb0:nonceb
+ska:kaenca
+skb:kaencb
+na1:noncea1
+nb1:nonceb
+xc:noncec1
+cb:noncec2
+
+%Reveal verification key
+out( 0 , < pub ( ska ) , pub (  skb ) > )
+
+%role a par a avec b
+out(1 ,aenc(<na0,a>,pub(skb)))
+in(1, aenc(<na0,xnb:nonceb,b>,pub(ska)))
+out(1, aenc(<xnb,one>,pub(skb)))
+
+%role b par b avec a
+in(2, aenc(<xna:noncea0,a>,pub(skb)))
+out(2, aenc(<xna,nb0,b>,pub(ska)))
+in(2, aenc(<nb0,one>,pub(skb)))
+
+%role a par a avec c
+out(3, aenc(<na1,a>,pub(skc)))
+in(3, aenc(<na1,xca:noncec1,c>,pub(ska)))
+out(3, aenc(<xca,one>,pub(skc)))
+
+%role b par b avec c
+in(4, aenc(<xcb:noncec2,c>,pub(skb)))
+out(4, aenc(<xcb,nb1,b>, pub(skc)))
+in(4, aenc(<nb1,one>,pub(skb)))
